@@ -13,7 +13,7 @@ export default function Home() {
           priority
         />
 
-        test
+        test 1
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
