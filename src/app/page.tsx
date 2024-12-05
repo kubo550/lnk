@@ -2,8 +2,17 @@
 import Image from "next/image";
 import {useState} from "react";
 
+
+const accessTimeValues = [
+  { value: 5, label: '5 minutes' },
+  { value: 60, label: '1 hour' },
+  { value: 1440, label: '1 day' },
+  { value: 43200, label: '1 month' },
+  { value: 525600, label: '1 year' },
+];
 export default function Home() {
   const [url, setUrl] = useState('');
+  const [accessTime, setAccessTime] = useState(5);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -37,7 +46,23 @@ export default function Home() {
                 Shorten
             </button>
 
+
         </div>
+        <div className="flex gap-4 items-center">
+          Access time:
+          <select
+              className="p-2 text-sm bg-gray-100 dark:bg-gray-800 dark:text-gray-100 rounded-md"
+              value={accessTime}
+              onChange={(e) => setAccessTime(Number(e.target.value))}
+          >
+            {accessTimeValues.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+            ))}
+          </select>
+        </div>
+
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
