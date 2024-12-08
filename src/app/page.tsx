@@ -1,6 +1,7 @@
 'use client';
 import Image from "next/image";
 import {useState} from "react";
+import {UrlInput} from "@/copmponents/UrlInput";
 
 
 const accessTimeValues = [
@@ -28,26 +29,6 @@ export default function Home() {
 
         Easiest way to shorten your URL. Get super short URL in few seconds.
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row w-full">
-
-          <input
-            className="w-full p-2 text-sm bg-gray-100 dark:bg-gray-800 dark:text-gray-100 rounded-md"
-            placeholder="Enter URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            />
-
-            <button
-                className="p-2 text-sm font-semibold text-white bg-blue-600 rounded-md"
-                onClick={() => {
-                    console.log('URL:', url);
-                }}
-            >
-                Shorten
-            </button>
-
-
-        </div>
         <div className="flex gap-4 items-center">
           Access time:
           <select
@@ -62,6 +43,19 @@ export default function Home() {
             ))}
           </select>
         </div>
+        
+        <UrlInput url={url} setUrl={setUrl} />
+
+        <button
+            className="p-2 text-sm font-semibold text-white bg-blue-600 rounded-md"
+            onClick={() => {
+              console.log('URL:', url);
+            }}
+        >
+          Shorten
+        </button>
+
+
 
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
