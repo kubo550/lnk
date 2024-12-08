@@ -22,11 +22,12 @@ export const UrlInput: FC<UrlInputProps> = ({url, setUrl}) => {
                 placeholder="Enter URL"
                 value={url}
                 onChange={(e) => {
+                    setValidationError('');
                     setUrl(e.target.value)
                     try {
                         urlValidation.parse(e.target.value);
-                        setValidationError('');
                     } catch (e) {
+                        console.log(e.errors);
                         setValidationError('Invalid URL');
                     }
                 }}

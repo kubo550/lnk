@@ -1,20 +1,29 @@
 'use client';
 import Image from "next/image";
 import {useState} from "react";
-import {UrlInput} from "@/copmponents/UrlInput";
+import {UrlInput} from "@/app/copmponents/UrlInput";
+import {createShortUrl} from "@/app/actions/urlActions";
+import dayjs from 'dayjs'
 
 
 const accessTimeValues = [
-  { value: 5, label: '5 minutes' },
-  { value: 60, label: '1 hour' },
-  { value: 1440, label: '1 day' },
-  { value: 43200, label: '1 month' },
-  { value: 525600, label: '1 year' },
+  { value: 5 * 60, label: '5 minutes' },
+  { value: 60 * 60, label: '1 hour' },
+  { value: 24 * 60 * 60, label: '1 day' },
+  { value: 30 * 24 * 60 * 60, label: '1 month' },
+  { value: 12 * 30 * 24 * 60 * 60, label: '1 year' },
 ];
 export default function Home() {
   const [url, setUrl] = useState('');
   const [accessTime, setAccessTime] = useState(5);
 
+    const handleSubmitUrl = async () => {
+        try {
+            await createShortUrl(url, {expiration: dayjs().add(accessTime, 'seconds').toISOString()});
+        } catch (e) {
+            console.error(e);
+        }
+    };
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -43,14 +52,12 @@ export default function Home() {
             ))}
           </select>
         </div>
-        
+
         <UrlInput url={url} setUrl={setUrl} />
 
         <button
             className="p-2 text-sm font-semibold text-white bg-blue-600 rounded-md"
-            onClick={() => {
-              console.log('URL:', url);
-            }}
+            onClick={handleSubmitUrl}
         >
           Shorten
         </button>
